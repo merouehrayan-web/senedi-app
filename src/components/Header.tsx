@@ -58,26 +58,8 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
             ))}
           </nav>
 
-          {/* Mobile nav */}
-          <nav className="flex md:hidden items-center gap-1">
-            {TABS.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-2 py-1 text-xs font-medium rounded transition-colors ${
-                  activeTab === tab.id
-                    ? "text-gold border border-gold/40 bg-gold/10"
-                    : "text-white/50"
-                }`}
-              >
-                {tab.id === "accueil"
-                  ? "Accueil"
-                  : tab.id === "planifier"
-                  ? "Planifier"
-                  : "Réalisations"}
-              </button>
-            ))}
-          </nav>
+          {/* Mobile: navigation assurée par BottomNav */}
+          <div className="md:hidden" />
         </div>
       </div>
     </header>
