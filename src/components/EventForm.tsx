@@ -57,6 +57,7 @@ export default function EventForm() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -102,11 +103,8 @@ export default function EventForm() {
       if (!res.ok) throw new Error(result.error);
 
       setSubmitted(true);
-      toast.success("Demande envoyée ! Nous vous recontactons très vite.");
-
-      if (result.whatsappUrl) {
-        setTimeout(() => window.open(result.whatsappUrl, "_blank"), 800);
-      }
+      if (result.whatsappUrl) setWhatsappUrl(result.whatsappUrl);
+      toast.success("Demande envoyée !");
     } catch {
       toast.error("Une erreur est survenue. Veuillez réessayer.");
     } finally {
@@ -134,16 +132,20 @@ export default function EventForm() {
           <h2 className="text-3xl font-bold text-white mb-3">
             Demande envoyée !
           </h2>
-          <p className="text-white/50 mb-2">
-            Votre récapitulatif a été transmis par email et WhatsApp.
-          </p>
-          <p className="text-white/40 text-sm">
+          <p className="text-white/50 mb-6">
             L&apos;équipe SENEDI SM vous recontacte très prochainement.
           </p>
-          <div className="mt-6 flex items-center justify-center gap-2 text-gold text-sm">
-            <MessageSquare className="w-4 h-4" />
-            <span>WhatsApp ouvert en parallèle</span>
-          </div>
+          {whatsappUrl && (
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
+            >
+              <MessageSquare className="w-4 h-4" />
+              Contacter via WhatsApp
+            </a>
+          )}
         </motion.div>
       </div>
     );
@@ -467,9 +469,8 @@ export default function EventForm() {
                     <div className="flex items-center gap-3 p-3 bg-gold/5 border border-gold/20 rounded-xl">
                       <Send className="w-4 h-4 text-gold flex-shrink-0" />
                       <p className="text-white/60 text-xs">
-                        Votre demande sera transmise par{" "}
-                        <span className="text-gold">email</span> et{" "}
-                        <span className="text-gold">WhatsApp</span> à l&apos;équipe SENEDI SM.
+                        Votre demande sera enregistrée et l&apos;équipe{" "}
+                        <span className="text-gold">SENEDI SM</span> vous recontactera rapidement.
                       </p>
                     </div>
                   </div>
