@@ -10,7 +10,7 @@ import {
   Heart, Briefcase, Gift, PartyPopper,
   Volume2, Sparkles, Landmark, UtensilsCrossed,
   Armchair, UserCheck, Flame, Music2, Zap, MonitorPlay, Bell,
-  MessageSquare, Send,
+  Send,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -57,7 +57,6 @@ export default function EventForm() {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [whatsappUrl, setWhatsappUrl] = useState<string | null>(null);
 
   const {
     register,
@@ -103,7 +102,6 @@ export default function EventForm() {
       if (!res.ok) throw new Error(result.error);
 
       setSubmitted(true);
-      if (result.whatsappUrl) setWhatsappUrl(result.whatsappUrl);
       toast.success("Demande envoyée !");
     } catch {
       toast.error("Une erreur est survenue. Veuillez réessayer.");
@@ -135,17 +133,6 @@ export default function EventForm() {
           <p className="text-white/50 mb-6">
             L&apos;équipe SENEDI SM vous recontacte très prochainement.
           </p>
-          {whatsappUrl && (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#25D366] text-white font-bold px-6 py-3 rounded-xl hover:opacity-90 transition-opacity"
-            >
-              <MessageSquare className="w-4 h-4" />
-              Contacter via WhatsApp
-            </a>
-          )}
         </motion.div>
       </div>
     );
