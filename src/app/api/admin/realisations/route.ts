@@ -1,7 +1,6 @@
 export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import path from "path";
+import { put } from "@vercel/blob";
 import { prisma } from "@/lib/prisma";
 
 export async function POST(req: NextRequest) {
@@ -15,20 +14,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Champs manquants" }, { status: 400 });
   }
 
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const ext = file.name.split(".").pop();
-  const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-  const filepath = path.join(process.cwd(), "public", "realisations", filename);
-
-  await writeFile(filepath, buffer);
+  const blob = await put(`realisations/${Date.now()}-${file.name}`, file, {
+    access: "public",
+  });
 
   const realisation = await prisma.realisation.create({
     data: {
       titre,
       eventType,
       description: description || null,
-      imageUrl: `/realisations/${filename}`,
+      imageUrl: blob.url,
     },
   });
 
