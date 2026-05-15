@@ -2,11 +2,13 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import { InboxIcon, ImageIcon, LogOut } from "lucide-react";
+import { InboxIcon, ImageIcon, LogOut, Star, Wrench } from "lucide-react";
 
 const NAV = [
   { href: "/admin/demandes", label: "Demandes", icon: InboxIcon },
   { href: "/admin/realisations", label: "Réalisations", icon: ImageIcon },
+  { href: "/admin/partenaires", label: "Références", icon: Star },
+  { href: "/admin/materiel", label: "Matériel", icon: Wrench },
 ];
 
 export default function AdminSidebar() {

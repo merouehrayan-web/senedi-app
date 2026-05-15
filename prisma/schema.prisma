@@ -37,3 +37,18 @@ model Admin {
   nom       String?
   createdAt DateTime @default(now())
 }
+
+model Partner {
+  id        String   @id @default(cuid())
+  nom       String
+  logoUrl   String
+  createdAt DateTime @default(now())
+}
+
+model Materiel {
+  id          String   @id @default(cuid())
+  nom         String
+  description String?
+  imageUrl    String
+  createdAt   DateTime @default(now())
+}
