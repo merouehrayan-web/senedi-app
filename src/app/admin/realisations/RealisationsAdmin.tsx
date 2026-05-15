@@ -37,18 +37,34 @@ export default function RealisationsAdmin({ realisations }: { realisations: Real
       const img = document.createElement("img");
       const url = URL.createObjectURL(f);
       img.onload = () => {
-        const MAX = 1600;
-        let { width, height } = img;
-        if (width > MAX || height > MAX) {
-          if (width > height) { height = Math.round((height / width) * MAX); width = MAX; }
-          else { width = Math.round((width / height) * MAX); height = MAX; }
+        try {
+          const MAX = 1280;
+          let { width, height } = img;
+          if (width > MAX || height > MAX) {
+            if (width > height) { height = Math.round((height / width) * MAX); width = MAX; }
+            else { width = Math.round((width / height) * MAX); height = MAX; }
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) { URL.revokeObjectURL(url); resolve(f); return; }
+          ctx.drawImage(img, 0, 0, width, height);
+          URL.revokeObjectURL(url);
+          canvas.toBlob(
+            (blob) => {
+              if (!blob) { resolve(f); return; }
+              resolve(new File([blob], f.name.replace(/\.[^.]+$/, ".jpg"), { type: "image/jpeg" }));
+            },
+            "image/jpeg",
+            0.75
+          );
+        } catch {
+          URL.revokeObjectURL(url);
+          resolve(f);
         }
-        const canvas = document.createElement("canvas");
-        canvas.width = width; canvas.height = height;
-        canvas.getContext("2d")!.drawImage(img, 0, 0, width, height);
-        URL.revokeObjectURL(url);
-        canvas.toBlob((blob) => resolve(new File([blob!], f.name, { type: "image/jpeg" })), "image/jpeg", 0.82);
       };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(f); };
       img.src = url;
     });
 
@@ -65,6 +81,11 @@ export default function RealisationsAdmin({ realisations }: { realisations: Real
     setUploading(true);
     try {
       const compressed = await compressImage(file);
+      if (compressed.size > 4 * 1024 * 1024) {
+        toast.error("Photo trop lourde. Utilisez une photo de moins de 4MB.");
+        setUploading(false);
+        return;
+      }
       const fd = new FormData();
       fd.append("file", compressed);
       fd.append("titre", form.titre);
