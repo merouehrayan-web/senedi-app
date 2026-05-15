@@ -104,20 +104,17 @@ export default function RealisationsAdmin({ realisations }: { realisations: Real
 
             <form onSubmit={handleUpload} className="space-y-4">
               {/* Image picker */}
-              <div
-                onClick={() => fileRef.current?.click()}
-                className="relative aspect-video rounded-xl border-2 border-dashed border-ink-border hover:border-gold/40 transition-colors cursor-pointer overflow-hidden bg-ink-hover flex items-center justify-center"
-              >
+              <label className="relative aspect-video rounded-xl border-2 border-dashed border-ink-border hover:border-gold/40 transition-colors cursor-pointer overflow-hidden bg-ink-hover flex items-center justify-center block">
                 {preview ? (
                   <Image src={preview} alt="preview" fill className="object-cover" />
                 ) : (
                   <div className="text-center">
                     <ImageIcon className="w-8 h-8 text-white/20 mx-auto mb-2" />
-                    <p className="text-white/40 text-sm">Cliquer pour choisir une image</p>
+                    <p className="text-white/40 text-sm">Appuyer pour choisir une image</p>
                   </div>
                 )}
                 <input ref={fileRef} type="file" accept="image/*" onChange={handleFile} className="hidden" />
-              </div>
+              </label>
 
               <div>
                 <label className="block text-white/60 text-sm mb-1.5">Titre *</label>
