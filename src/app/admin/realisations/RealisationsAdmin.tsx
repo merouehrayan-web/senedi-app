@@ -32,6 +32,26 @@ export default function RealisationsAdmin({ realisations }: { realisations: Real
   const [form, setForm] = useState({ titre: "", eventType: "mariage", description: "" });
   const [file, setFile] = useState<File | null>(null);
 
+  const compressImage = (f: File): Promise<File> =>
+    new Promise((resolve) => {
+      const img = document.createElement("img");
+      const url = URL.createObjectURL(f);
+      img.onload = () => {
+        const MAX = 1600;
+        let { width, height } = img;
+        if (width > MAX || height > MAX) {
+          if (width > height) { height = Math.round((height / width) * MAX); width = MAX; }
+          else { width = Math.round((width / height) * MAX); height = MAX; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width; canvas.height = height;
+        canvas.getContext("2d")!.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+        canvas.toBlob((blob) => resolve(new File([blob!], f.name, { type: "image/jpeg" })), "image/jpeg", 0.82);
+      };
+      img.src = url;
+    });
+
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -44,8 +64,9 @@ export default function RealisationsAdmin({ realisations }: { realisations: Real
     if (!file) return toast.error("Sélectionnez une image");
     setUploading(true);
     try {
+      const compressed = await compressImage(file);
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", compressed);
       fd.append("titre", form.titre);
       fd.append("eventType", form.eventType);
       fd.append("description", form.description);
