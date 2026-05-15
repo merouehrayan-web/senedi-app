@@ -114,8 +114,8 @@ export default function RealisationsAdmin({ realisations }: { realisations: Real
 
       {/* Upload form modal */}
       {showForm && (
-        <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-          <div className="bg-ink-card border border-ink-border rounded-2xl w-full max-w-lg p-6">
+        <div className="fixed inset-0 bg-black/80 z-50 flex items-end sm:items-center justify-center">
+          <div className="bg-ink-card border border-ink-border rounded-t-2xl sm:rounded-2xl w-full max-w-lg p-6 overflow-y-auto max-h-[90vh] pb-24 sm:pb-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="text-white font-bold text-lg">Nouvelle réalisation</h2>
               <button onClick={() => { setShowForm(false); setPreview(null); setFile(null); }} className="text-white/40 hover:text-white">
