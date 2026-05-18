@@ -73,6 +73,12 @@ const SERVICES = [
     icon: Bell,
     description: "Personnel de service expérimenté pour assurer le bon déroulement de votre événement.",
   },
+  {
+    id: "all-in-one",
+    label: "All In One",
+    icon: Sparkles,
+    description: "Forfait complet tout inclus : son, lumière, décoration, traiteur et personnel — une seule prestation pour un événement clé en main.",
+  },
 ];
 
 export default function Services() {

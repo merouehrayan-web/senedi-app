@@ -44,6 +44,7 @@ const SERVICES = [
   { id: "laser-show", label: "Laser Show", icon: Zap },
   { id: "mapping", label: "Mapping", icon: MonitorPlay },
   { id: "service", label: "Service", icon: Bell },
+  { id: "all-in-one", label: "All In One", icon: Sparkles },
 ];
 
 const STEPS = [
