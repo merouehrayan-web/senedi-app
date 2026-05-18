@@ -47,9 +47,9 @@ const SERVICES = [
 ];
 
 const STEPS = [
-  { id: 1, label: "Contact" },
-  { id: 2, label: "Événement" },
-  { id: 3, label: "Services" },
+  { id: 1, label: "Événement" },
+  { id: 2, label: "Services" },
+  { id: 3, label: "Contact" },
   { id: 4, label: "Récapitulatif" },
 ];
 
@@ -84,9 +84,9 @@ export default function EventForm() {
 
   const nextStep = async () => {
     let valid = false;
-    if (step === 1) valid = await trigger(["nom", "prenom", "email", "telephone"]);
-    if (step === 2) valid = await trigger(["eventType"]);
-    if (step === 3) valid = await trigger(["services"]);
+    if (step === 1) valid = await trigger(["eventType"]);
+    if (step === 2) valid = await trigger(["services"]);
+    if (step === 3) valid = await trigger(["nom", "prenom", "email", "telephone"]);
     if (valid) setStep((s) => Math.min(s + 1, 4));
   };
 
@@ -191,85 +191,8 @@ export default function EventForm() {
         <div className="bg-ink-card rounded-3xl border border-ink-border overflow-hidden shadow-2xl">
           <form onSubmit={handleSubmit(onSubmit)}>
             <AnimatePresence mode="wait">
-              {/* Step 1 — Contact */}
+              {/* Step 1 — Event Type */}
               {step === 1 && (
-                <motion.div
-                  key="step1"
-                  initial={{ opacity: 0, x: 40 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -40 }}
-                  transition={{ duration: 0.25 }}
-                  className="p-6 sm:p-8"
-                >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
-                      <User className="w-5 h-5 text-gold" />
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-bold text-white">Vos coordonnées</h2>
-                      <p className="text-white/40 text-sm">Pour vous recontacter</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">Prénom *</label>
-                      <input
-                        {...register("prenom")}
-                        placeholder="Votre prénom"
-                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
-                      />
-                      {errors.prenom && (
-                        <p className="text-red-400 text-xs mt-1">{errors.prenom.message}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">Nom *</label>
-                      <input
-                        {...register("nom")}
-                        placeholder="Votre nom"
-                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
-                      />
-                      {errors.nom && (
-                        <p className="text-red-400 text-xs mt-1">{errors.nom.message}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">
-                        <Mail className="w-3.5 h-3.5 inline mr-1" />
-                        Email *
-                      </label>
-                      <input
-                        {...register("email")}
-                        type="email"
-                        placeholder="votre@email.com"
-                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
-                      />
-                      {errors.email && (
-                        <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>
-                      )}
-                    </div>
-                    <div>
-                      <label className="block text-white/60 text-sm mb-1.5">
-                        <Phone className="w-3.5 h-3.5 inline mr-1" />
-                        Téléphone *
-                      </label>
-                      <input
-                        {...register("telephone")}
-                        type="tel"
-                        placeholder="+33 6 00 00 00 00"
-                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
-                      />
-                      {errors.telephone && (
-                        <p className="text-red-400 text-xs mt-1">{errors.telephone.message}</p>
-                      )}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {/* Step 2 — Event Type */}
-              {step === 2 && (
                 <motion.div
                   key="step2"
                   initial={{ opacity: 0, x: 40 }}
@@ -327,8 +250,8 @@ export default function EventForm() {
                 </motion.div>
               )}
 
-              {/* Step 3 — Services */}
-              {step === 3 && (
+              {/* Step 2 — Services */}
+              {step === 2 && (
                 <motion.div
                   key="step3"
                   initial={{ opacity: 0, x: 40 }}
@@ -386,6 +309,73 @@ export default function EventForm() {
                   {errors.services && (
                     <p className="text-red-400 text-xs mt-1">{errors.services.message}</p>
                   )}
+                </motion.div>
+              )}
+
+              {/* Step 3 — Contact */}
+              {step === 3 && (
+                <motion.div
+                  key="step3"
+                  initial={{ opacity: 0, x: 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -40 }}
+                  transition={{ duration: 0.25 }}
+                  className="p-6 sm:p-8"
+                >
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center">
+                      <User className="w-5 h-5 text-gold" />
+                    </div>
+                    <div>
+                      <h2 className="text-lg font-bold text-white">Vos coordonnées</h2>
+                      <p className="text-white/40 text-sm">Pour vous recontacter</p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-white/60 text-sm mb-1.5">Prénom *</label>
+                      <input
+                        {...register("prenom")}
+                        placeholder="Votre prénom"
+                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
+                      />
+                      {errors.prenom && <p className="text-red-400 text-xs mt-1">{errors.prenom.message}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-white/60 text-sm mb-1.5">Nom *</label>
+                      <input
+                        {...register("nom")}
+                        placeholder="Votre nom"
+                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
+                      />
+                      {errors.nom && <p className="text-red-400 text-xs mt-1">{errors.nom.message}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-white/60 text-sm mb-1.5">
+                        <Mail className="w-3.5 h-3.5 inline mr-1" />Email *
+                      </label>
+                      <input
+                        {...register("email")}
+                        type="email"
+                        placeholder="votre@email.com"
+                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
+                      />
+                      {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email.message}</p>}
+                    </div>
+                    <div>
+                      <label className="block text-white/60 text-sm mb-1.5">
+                        <Phone className="w-3.5 h-3.5 inline mr-1" />Téléphone *
+                      </label>
+                      <input
+                        {...register("telephone")}
+                        type="tel"
+                        placeholder="+221 77 000 00 00"
+                        className="w-full bg-ink-hover border border-ink-border rounded-xl px-4 py-3 text-white placeholder-white/20 focus:outline-none focus:border-gold/50 transition-colors"
+                      />
+                      {errors.telephone && <p className="text-red-400 text-xs mt-1">{errors.telephone.message}</p>}
+                    </div>
+                  </div>
                 </motion.div>
               )}
 
