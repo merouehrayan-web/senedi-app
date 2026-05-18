@@ -23,18 +23,18 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">Contact</h3>
             <div className="space-y-2">
               <a
-                href="mailto:contact@senedi-sm.com"
+                href="mailto:info@senedism.com"
                 className="flex items-center gap-2 text-white/40 hover:text-gold transition-colors text-sm"
               >
                 <Mail className="w-4 h-4" />
-                contact@senedi-sm.com
+                info@senedism.com
               </a>
               <a
-                href="tel:+33600000000"
+                href="tel:+221776909888"
                 className="flex items-center gap-2 text-white/40 hover:text-gold transition-colors text-sm"
               >
                 <Phone className="w-4 h-4" />
-                +33 6 00 00 00 00
+                +221 77 690 98 88
               </a>
             </div>
           </div>
