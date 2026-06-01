@@ -1,4 +1,4 @@
-import { Mail, Phone, Share2 } from "lucide-react";
+import { Mail, Share2 } from "lucide-react";
 import Image from "next/image";
 
 export default function Footer() {
@@ -28,13 +28,6 @@ export default function Footer() {
               >
                 <Mail className="w-4 h-4" />
                 info@senedism.com
-              </a>
-              <a
-                href="tel:+221776909888"
-                className="flex items-center gap-2 text-white/40 hover:text-gold transition-colors text-sm"
-              >
-                <Phone className="w-4 h-4" />
-                +221 77 690 98 88
               </a>
             </div>
           </div>
